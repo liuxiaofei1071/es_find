@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ES搜索首页</title>
+    <link rel="stylesheet" href="{% static "plugins/bootstrap3.2.2/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "plugins/font-awesome/css/font-awesome.css" %}">
+    <style>
+
+        html, body {
+            height: 100%;
+            min-height: 101%;
+            overflow: -moz-scrollbars-vertical;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default" style="background: #d0e9c6">
+
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="javascript:viod(0)" style="margin-left: 80px">ES搜索引擎</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active" style="margin-left: 20px"><a href="javascript:viod(0)">首页 <span class="sr-only">(current)</span></a>
+                </li>
+                <li><a href="javascript:viod(0)">问答</a></li>
+                <li><a href="javascript:viod(0)">专栏</a></li>
+                <li><a href="javascript:viod(0)">讲堂</a></li>
+                <li><a href="javascript:viod(0)">圈子</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">发现
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">活动</a></li>
+                        <li><a href="#">标签 action</a></li>
+                        <li><a href="#">库工作</a></li>
+                        <li><a href="#">排行榜</a></li>
+                        <li><a href="#">徽章</a></li>
+                        <li><a href="#">笔记</a></li>
+                        <li><a href="#">开发手册</a></li>
+                        <li><a href="#">广告投放</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left  " role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-success" style="margin-left: 100px">立即登录</button>
+                <button type="submit" class="btn btn-warning" style="margin-left: 5px">免费注册</button>
+            </form>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="container">
+    <div class="row">
+        <ul class="nav nav-tabs" id="btnGroup" style="margin-left: 24px;border-bottom: none">
+            <li role="presentation" class="active"><a href="javascript:void(0)">全部</a></li>
+            <li role="presentation"><a href="javascript:void(0)">问答</a></li>
+            <li role="presentation"><a href="javascript:void(0)">文章</a></li>
+            <li role="presentation"><a href="javascript:void(0)">新闻</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="navbar-form navbar-left" role="search" style="margin-top: 4px;margin-left: 8px">
+            <div class="form-group">
+                <input type="text" class="form-control" id="mysearch" oninput="Search(actionType)"
+                       style="width: 700px;height: 40px">
+            </div>
+            <button type="button" id="searchbtn" class="btn btn-success"
+                    style="margin-left: 5px;height: 40px;width: 160px">搜索
+            </button>
+        </div>
+
+    </div>
+    <div class="row">
+        <div id="content_num" style="margin-top: 5px;margin-left: 20px"></div>
+        <div id="contents" style="margin-top: 2px;margin-left: 20px"></div>
+    </div>
+
+</div>
+
+
+</body>
+<script src="{% static "plugins/jQuery/jQuery.js" %}"></script>
+<script src="{% static "plugins/bootstrap3.2.2/js/bootstrap.js" %}"></script>
+<script>
+    var actionType = "全部";
+
+    function Search(actionType) {
+        var search_msg = $("#mysearch").val();
+        $.ajax({
+            type: "POST",
+            url: "/index/",
+            data: {"search_msg": search_msg, "action_type": actionType},
+            success: function (data) {
+                console.log(data.searchMsg.hits.total);
+                $("#content_num").html("<h3>找到约<b style='color:#757575;'>" + data.searchMsg.hits.total + "</b>条数据</h3>");
+                var li = "";
+                $.each(data.searchMsg.hits.hits, function (k, v) {
+                    {#console.log(k, v);#}
+                    li += "<div><a href='/desc/" + v._source.a_url + "'>" + v.highlight.title + "</a><p>" + v._source.summary + "</p></div>";
+                });
+                $("#contents").html(li)
+            }
+        });
+    }
+
+
+    //标签分类
+    $("#btnGroup li").click(function () {
+        {#console.log($(this).text());#}
+        $(this).addClass('active').siblings().removeClass('active');
+        Search($(this).text())
+    })
+</script>
+</html>
