@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bfac7927-d3e6-4fae-9d1d-c0d1ce5df551" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/utils/data/体育资讯.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/data/关注社会.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/data/图文阅读.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/data/娱乐资讯.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/data/时事新闻.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/data/时尚双语.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/data/校园生活.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/data/科技资讯.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/data/经济新闻.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/data/职场双语.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app01/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app01/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/es_qd/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/es_qd/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/es.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/es.py" afterDir="false" />
-    </list>
+    <list default="true" id="bfac7927-d3e6-4fae-9d1d-c0d1ce5df551" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +54,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="1922" />
+          <entry key="html" value="1938" />
           <entry key="py" value="3265" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="1922" />
+          <entry key="HTML" value="1938" />
           <entry key="Python" value="3265" />
         </counts>
       </usages-collector>
@@ -152,8 +135,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1916">
-              <caret line="55" column="20" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
+            <state relative-caret-position="39">
+              <caret line="185" column="5" lean-forward="true" selection-start-line="185" selection-start-column="5" selection-end-line="185" selection-end-column="5" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -553,8 +536,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1916">
-          <caret line="55" column="20" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
+        <state relative-caret-position="39">
+          <caret line="185" column="5" lean-forward="true" selection-start-line="185" selection-start-column="5" selection-end-line="185" selection-end-column="5" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
