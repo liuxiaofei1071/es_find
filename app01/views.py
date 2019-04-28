@@ -4,7 +4,7 @@ from app01 import  models
 import requests
 from bs4 import BeautifulSoup
 from utils.es import filter_msg,es,suggest_filter_msg
-from utils.pagination import Pagination
+
 
 
 def index(request):
