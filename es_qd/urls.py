@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^spider/', views.spider,name='spider'),
     url(r'^index/', views.index,name='index'),
     url(r'^desc/', views.desc,name='desc'),
+    url(r'^my_suggest/', views.my_suggest,name='my_suggest'),
 ]

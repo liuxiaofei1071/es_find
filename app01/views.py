@@ -3,19 +3,34 @@ from django.http import JsonResponse
 from app01 import  models
 import requests
 from bs4 import BeautifulSoup
-from utils.es import filter_msg,es
+from utils.es import filter_msg,es,suggest_filter_msg
+from utils.pagination import Pagination
 
 
 def index(request):
+
     if request.method=="POST":
+
         search_msg=request.POST.get("search_msg")
         action_type = request.POST.get("action_type")
-        # print(search_msg)
-        res = filter_msg(search_msg,action_type)
-        return JsonResponse({"searchMsg":res})
+        current_page = request.POST.get("currentPage")
+        res = filter_msg(search_msg,action_type,current_page)
+        return JsonResponse(res)
+
+
     return render(request,'index.html')
 
 
+def my_suggest(request):
+    if request.method == "POST":
+        search_msg = request.POST.get("search_msg")
+        # print(search_msg)
+        res = suggest_filter_msg(search_msg)
+        return JsonResponse({"mySuggest":res})
+    return HttpResponse('对不起,403页面错误')
+
+
+#获取title的url返回对应的结果
 def desc(request):
     a_url = request.META['PATH_INFO'].split("/desc/")[-1]
     desc_obj = models.ESTotal.objects.filter(a_url__contains=a_url).first()  #a_url__contains获取包含的url
@@ -31,7 +46,7 @@ def spider(request):
         for item in li_list:
             title_obj = item.find("h3")
             if not title_obj:continue
-            a_url = "https" + item.find("a").get("href")
+            a_url = "https:" + item.find("a").get("href")
             summary = item.find("p").text.split(" ")[-1]
             title = title_obj.text
             action_type = "新闻"

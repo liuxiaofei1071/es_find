@@ -14,6 +14,24 @@
             overflow: -moz-scrollbars-vertical;
         }
 
+        #show_lexicon {
+            list-style: none;
+            background: white;
+            position: absolute;
+            width: 100%;
+            padding: 6px 12px;
+
+        }
+
+        #show_lexicon li {
+            padding: 5px 0;
+        {#border-radius: 3px;#}
+
+        }
+
+        #show_lexicon li:hover {
+            background-color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -35,7 +53,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active" style="margin-left: 20px"><a href="javascript:viod(0)">首页 <span class="sr-only">(current)</span></a>
+                <li  style="margin-left: 20px"><a href="javascript:viod(0)">首页 <span class="sr-only">(current)</span></a>
                 </li>
                 <li><a href="javascript:viod(0)">问答</a></li>
                 <li><a href="javascript:viod(0)">专栏</a></li>
@@ -78,13 +96,16 @@
     </div>
     <div class="row">
         <div class="navbar-form navbar-left" role="search" style="margin-top: 4px;margin-left: 8px">
-            <div class="form-group">
-                <input type="text" class="form-control" id="mysearch" oninput="Search(actionType)"
+            <div class="form-group" style="position: relative">
+                <input type="text" class="form-control" id="search_msg" oninput="mySuggest()"
                        style="width: 700px;height: 40px">
+                <ul id="show_lexicon">
+                </ul>
             </div>
-            <button type="button" id="searchbtn" class="btn btn-success"
+            <button type="button" id="searchbtn" class="btn btn-success" onclick="Search(actionType,Page)"
                     style="margin-left: 5px;height: 40px;width: 160px">搜索
             </button>
+
         </div>
 
     </div>
@@ -92,6 +113,16 @@
         <div id="content_num" style="margin-top: 5px;margin-left: 20px"></div>
         <div id="contents" style="margin-top: 2px;margin-left: 20px"></div>
     </div>
+
+    <!-- 分页 -->
+    <div class="row">
+        <nav aria-label="Page navigation" style="margin-top: 5px;margin-left: 22px">
+            <ul class="pagination" id="pagination">
+
+            </ul>
+        </nav>
+    </div>
+
 
 </div>
 
@@ -101,32 +132,74 @@
 <script src="{% static "plugins/bootstrap3.2.2/js/bootstrap.js" %}"></script>
 <script>
     var actionType = "全部";
-
-    function Search(actionType) {
-        var search_msg = $("#mysearch").val();
+    var Page = 1;
+    //搜索展示
+    function Search(actionType,Page) {
+        $("#show_lexicon").empty();
+        var search_msg = $("#search_msg").val();
         $.ajax({
-            type: "POST",
             url: "/index/",
-            data: {"search_msg": search_msg, "action_type": actionType},
+            type: "POST",
+            data: {"search_msg": search_msg, "action_type": actionType,"currentPage":Page},
             success: function (data) {
-                console.log(data.searchMsg.hits.total);
-                $("#content_num").html("<h3>找到约<b style='color:#757575;'>" + data.searchMsg.hits.total + "</b>条数据</h3>");
+                //展示分页
+                $("#pagination").html(data.page);
+                //展示结果条数
+                $("#content_num").html("<strong style='color:#999;font-size:12px;'>找到约<b >" + data.total_num + "</b>条数据</strong>");
                 var li = "";
-                $.each(data.searchMsg.hits.hits, function (k, v) {
+
+                $.each(data.total_data, function (k, v) {
                     {#console.log(k, v);#}
                     li += "<div><a href='/desc/" + v._source.a_url + "'>" + v.highlight.title + "</a><p>" + v._source.summary + "</p></div>";
                 });
-                $("#contents").html(li)
+                $("#contents").html(li);
+
+                 // 分页
+                $("#pagination li a").click(function () {
+
+                    console.log($(this).attr('page'));
+                    var n = $(this).attr('page');
+                    if (n){
+                        Search(actionType, n)
+                    }
+                })
             }
         });
     }
 
-
     //标签分类
     $("#btnGroup li").click(function () {
-        {#console.log($(this).text());#}
         $(this).addClass('active').siblings().removeClass('active');
         Search($(this).text())
-    })
+    });
+
+    //建议器
+    function mySuggest() {
+        $("#show_lexicon").removeClass('hide');
+        var search_msg = $("#search_msg").val();
+        $.ajax({
+            url: '/my_suggest/',
+            type: 'POST',
+            data: {"search_msg": search_msg},
+            success: function (data) {
+                if (data) {
+                    var li = "";
+                    $.each(data.mySuggest, function (k, v) {
+                         li += `<li>${v}</li>`
+                    });
+                    $("#show_lexicon").html(li);
+                    $("#show_lexicon li").click(function () {
+                        $("#search_msg").val($(this).text());
+                        $("#show_lexicon").empty();
+                        Search(actionType)
+                    })
+
+                }
+
+            }
+        })
+    }
+
+
 </script>
 </html>
